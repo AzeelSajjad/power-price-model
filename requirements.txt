@@ -1,0 +1,23 @@
+# Database
+sqlalchemy
+alembic
+psycopg2-binary
+python-dotenv
+
+# Data fetching & processing
+pandas
+requests
+httpx
+
+# Modeling
+numpy
+scipy
+statsmodels
+scikit-learn
+
+# API
+fastapi
+uvicorn
+
+# Testing
+pytest
