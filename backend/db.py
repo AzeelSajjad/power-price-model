@@ -16,9 +16,9 @@ database_url = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_POR
 #create the sqlalchemy engine
 engine = create_engine(database_url)
 
-try:
-    #use engine.connect() to connect the database and if it connects succesfully print statement will show
-    with engine.connect() as connection:
-        print("Connection successful!")
-except Exception as e:
-    print(f"Connection failed: {e}")
+if __name__ == "__main__":
+    try:
+        with engine.connect() as connection:
+            print("Connection successful!")
+    except Exception as e:
+        print(f"Connection failed: {e}")

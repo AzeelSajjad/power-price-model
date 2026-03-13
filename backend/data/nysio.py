@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-from db import engine
+from ..db import engine
 import io
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
@@ -14,6 +14,14 @@ def fetch_price():
         print("Reached page")
         with engine.begin() as connection:
             df = pd.read_csv(io.StringIO(response.text))
+            df = df.rename(columns={
+                'Time Stamp': 'timestamp',
+                'Name': 'name',
+                'PTID': 'ptid',
+                'LBMP ($/MWHr)': 'lbmp',
+                'Marginal Cost Losses ($/MWHr)': 'marg_cost_loss',
+                'Marginal Cost Congestion ($/MWHr)': 'marg_cost_congestion'
+            })
             df.to_sql('prices', con=connection, if_exists='append', index=False)
     else:
         print(f"Failed to reach page. Status code: {response.status_code}")
@@ -26,6 +34,13 @@ def fetch_load():
         print("Reached page")
         with engine.begin() as connection:
             df = pd.read_csv(io.StringIO(response.text))
+            df = df.rename(columns={
+                'Time Stamp': 'timestamp',
+                'Time Zone': 'timezone',
+                'Name': 'name',
+                'PTID': 'ptid',
+                'Load': 'load'
+            })
             df.to_sql('load', con=connection, if_exists='append', index=False)
     else:
         print(f"Failed to reach page. Status code: {response.status_code}")
@@ -35,12 +50,12 @@ if __name__ == '__main__':
     scheduler.add_job(
         func=fetch_price,
         trigger='interval',
-        hours=1
+        seconds=30
     )
     scheduler.add_job(
         func=fetch_load,
         trigger='interval',
-        hours=1
+        seconds=30
     )
     scheduler.start()
     try:
