@@ -12,7 +12,7 @@ class Base(DeclarativeBase):
     pass
 
 class Load(Base):
-    __tablename__ = "Load"
+    __tablename__ = "load"
     id: Mapped[String] = mapped_column(primary_key=True, autoincrement=True)
     timestamp = Mapped[datetime] = mapped_column()
     timezone = Mapped[String] = mapped_column()
