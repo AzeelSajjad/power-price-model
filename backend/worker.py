@@ -1,6 +1,6 @@
 """Worker process: runs all data pipelines on a schedule."""
-from data.nysio import fetch_price, fetch_load
-from data.weather import fetch_weather
+from backend.data.nysio import fetch_price, fetch_load
+from backend.data.weather import fetch_weather
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 scheduler = BlockingScheduler()
