@@ -46,6 +46,8 @@ def fetch_load():
         print(f"Failed to reach page. Status code: {response.status_code}")
         
 if __name__ == '__main__':
+    from .weather import fetch_weather
+
     scheduler = BackgroundScheduler()
     scheduler.add_job(
         func=fetch_price,
@@ -57,6 +59,12 @@ if __name__ == '__main__':
         trigger='interval',
         seconds=30
     )
+    scheduler.add_job(
+        func=fetch_weather,
+        trigger='interval',
+        minutes=15
+    )
+    fetch_weather()  # run once immediately
     scheduler.start()
     try:
         while True:

@@ -6,6 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 from models.prices import Price
 from models.load import Load
+from models.weather import Weather
 from models.base import Base
 import os
 

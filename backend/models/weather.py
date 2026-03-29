@@ -12,7 +12,9 @@ class Weather(Base):
     __tablename__ = "weather"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     timestamp: Mapped[datetime] = mapped_column()
-    timezone: Mapped[str] = mapped_column()
-    temperature: Mapped[int] = mapped_column()
+    zone: Mapped[str] = mapped_column()
+    latitude: Mapped[float] = mapped_column()
+    longitude: Mapped[float] = mapped_column()
+    temperature: Mapped[float] = mapped_column()
     wind_speed: Mapped[float] = mapped_column()
     cloud_cover: Mapped[float] = mapped_column()
