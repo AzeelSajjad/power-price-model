@@ -25,6 +25,7 @@ export default function WeatherChart({ data }) {
           <Tooltip
             contentStyle={{ backgroundColor: '#1e1e2f', border: '1px solid #444' }}
             labelStyle={{ color: '#aaa' }}
+            cursor={{ fill: 'rgba(255,255,255,0.05)' }}
           />
           <Legend wrapperStyle={{ fontSize: 12 }} />
           <Bar dataKey="temperature" fill="#f59e0b" name="Temp (C)" />
