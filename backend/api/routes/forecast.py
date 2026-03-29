@@ -55,18 +55,21 @@ def forecast_xgboost(zone: str):
     metrics = model.train(df)
     importance = model.feature_importance()
 
-    predictions = model.predict(df)
-    actuals = df["lbmp"].tolist()
-    timestamps = df["timestamp"].dt.isoformat().tolist()
+    predictions = [float(p) for p in model.predict(df)]
+    actuals = [float(a) for a in df["lbmp"]]
+    timestamps = df["timestamp"].dt.strftime("%Y-%m-%dT%H:%M:%S").tolist()
+
+    imp = importance.head(10)
+    imp["importance"] = imp["importance"].astype(float)
 
     return {
         "zone": zone,
         "metrics": {
-            "mae": round(metrics.mae, 2),
-            "rmse": round(metrics.rmse, 2),
-            "r2": round(metrics.r2, 4),
+            "mae": round(float(metrics.mae), 2),
+            "rmse": round(float(metrics.rmse), 2),
+            "r2": round(float(metrics.r2), 4),
         },
-        "feature_importance": importance.head(10).round(4).to_dict(orient="records"),
+        "feature_importance": imp.round(4).to_dict(orient="records"),
         "fitted": [
             {"timestamp": ts, "actual": round(a, 2), "predicted": round(p, 2)}
             for ts, a, p in zip(timestamps, actuals, predictions)
