@@ -8,12 +8,18 @@ python-dotenv
 pandas
 requests
 httpx
+apscheduler
+openmeteo-requests
+requests-cache
+retry-requests
 
 # Modeling
 numpy
 scipy
 statsmodels
 scikit-learn
+xgboost
+joblib
 
 # API
 fastapi

@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from ..db import engine
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -23,7 +24,8 @@ NYISO_ZONES = {
 }
 
 # Set up cached session to avoid hammering the API
-cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
+cache_path = '/tmp/openmeteo_cache' if os.getenv("RAILWAY_ENVIRONMENT") else '.cache'
+cache_session = requests_cache.CachedSession(cache_path, expire_after=3600)
 retry_session = retry(cache_session, retries=3, backoff_factor=0.2)
 openmeteo = openmeteo_requests.Client(session=retry_session)
 
